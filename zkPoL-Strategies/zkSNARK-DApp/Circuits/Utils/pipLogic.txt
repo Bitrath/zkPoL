@@ -1,0 +1,35 @@
+FUNCTION isInside
+    CHECK num of vertices 
+    CREATE segment from our POINT to INFINITY 
+    INITIALIZE count 
+    FOR EACH segment of polygon:
+        CHECK IF line segment to infinty INTERSECTS with current segment of polygon: (function doIntersect)
+            CHECK IF relation is COLLINEAR: (function orientation)
+                EXIT -> we know its isInside 
+            count + 1
+        EXIT -> if ODD (isInside), if EVEN (isOutside)
+
+
+FUNCTION doIntersect(p1, q1, p2, q2):   SEGMENTS p1 -> p2 & q1 -> q2 
+    FIND the 4 orientation needed to check general and special cases
+    1) p1, q1, p2
+    2) p1, q1, q2
+    3) p2, q2, p1
+    4) p2, q2, q1
+    CHECK GENERAL CASE 
+        IF o1 != o2 & o3 != o4 
+            RETURN True (1)
+    CHECK SPECIAL CASES: collinears
+        IF o1 || o2 || o3 || o4 == 0 
+            RETURN True & collinear (2)
+    RETURN False (0)
+
+FUNCTION orientation(p, q, r): 
+    COMPUTE equation ...
+    CHECK RESULT:
+        IF equation == 0: 
+            RETURN 0 (collinear)
+        IF equation > 0:
+            RETURN 1 (clockwise)
+        IF equation < 0: (EVERY OTHER CASE)
+            RETURN 2 (counter clockwise)
